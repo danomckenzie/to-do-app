@@ -6,13 +6,15 @@ function onReady() {
   addToDoForm.addEventListener('submit', event => {
     event.preventDefault();
 
+    console.log("thing");
+
     let title = newToDoText.value;
 
     let newLi = document.createElement('li');
 
     let checkbox = document.createElement('input');
 
-    let delete = document.createElement('button');
+    let deleteButton = document.createElement('button');
 
     checkbox.type = "checkbox";
 
@@ -20,7 +22,11 @@ function onReady() {
 
     newLi.appendChild(checkbox);
 
+    newLi.appendChild(deleteButton);
+
     toDoList.appendChild(newLi);
+
+    console.log(newLi);
 
     newToDoText.value = '';
   });
