@@ -22,13 +22,21 @@ function onReady() {
 
     newLi.appendChild(checkbox);
 
-    newLi.appendChild(deleteButton);
-
     toDoList.appendChild(newLi);
 
     console.log(newLi);
 
     newToDoText.value = '';
+
+    newLi.appendChild(deleteButton);
+
+    toDoList.appendChild(newLi);
+
+    deleteButton.innerHTML = "Delete";
+
+    deleteButton.addEventListener('click', function(e){
+      toDoList.removeChild(e.target.parentNode);
+    })
   });
 }
 
