@@ -1,43 +1,65 @@
 function onReady() {
+  let id = 0;
+
+  let toDos = [];
   const addToDoForm = document.getElementById('addToDoForm');
   const newToDoText = document.getElementById('newToDoText');
   const toDoList = document.getElementById('toDoList');
 
-  addToDoForm.addEventListener('submit', event => {
-    event.preventDefault();
+  function createNewToDo() {
+    if (!newToDoText.value) { return; }
 
-    console.log("thing");
-
-    let title = newToDoText.value;
-
-    let newLi = document.createElement('li');
-
-    let checkbox = document.createElement('input');
-
-    let deleteButton = document.createElement('button');
-
-    checkbox.type = "checkbox";
-
-    newLi.textContent = title;
-
-    newLi.appendChild(checkbox);
-
-    toDoList.appendChild(newLi);
-
-    console.log(newLi);
+    toDos.push({
+      title: newToDoText.value,
+      complete: false,
+      id: id
+    });
 
     newToDoText.value = '';
+      id++
+    renderTheUI();
+  }
 
-    newLi.appendChild(deleteButton);
+  function renderTheUI() {
+    const toDoList = document.getElementById('toDoList');
 
-    toDoList.appendChild(newLi);
+    toDoList.textContent = '';
 
-    deleteButton.innerHTML = "Delete";
+    toDos.forEach(function(toDo) {
+      const newLi = document.createElement('li');
+      const checkbox = document.createElement('input');
+      const deleteButton = document.createElement('button');
+      checkbox.type = "checkbox";
 
-    deleteButton.addEventListener('click', function(e){
-      toDoList.removeChild(e.target.parentNode);
-    })
+      newLi.textContent = toDo.title;
+
+      toDoList.appendChild(newLi);
+      newLi.appendChild(checkbox);
+
+      newLi.appendChild(deleteButton);
+
+      deleteButton.innerHTML = "delete";
+
+      deleteButton.addEventListener('click', () => deleteToDo(toDo.id));
+
+    });
+  }
+
+  addToDoForm.addEventListener('submit', event => {
+    event.preventDefault();
+    createNewToDo();
+    newToDoText.value = '';
   });
+
+
+        function deleteToDo(id) {
+          toDos = toDos.filter(item => item.id !== id);
+          console.log(toDos);
+
+          renderTheUI();
+        }
+
+  renderTheUI();
 }
 
 window.onload = function() {
